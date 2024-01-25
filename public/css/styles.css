@@ -1,0 +1,117 @@
+#body{
+    background-color: rgb(110, 110, 110);
+}
+
+.container-principal{
+    margin-top: 200px;
+    background-color: rgb(255, 255, 255);
+    width: 350px;
+    height: 450px;
+    border-radius: 5px;
+}
+
+.container-envio{
+    margin-top: 10px;
+    width: 380px;
+}
+
+.div-btn{
+    margin-top: 10px;
+
+}
+
+.input-resposta{
+    height: 100px;
+}
+
+.msg-append{
+    border-radius: 6px;
+    width: 600px;
+    max-width: 500px; 
+    margin-left: 250px;
+}
+
+.msg-horario{
+   float: right;
+}
+
+input:focus{
+    outline: thin dotted;
+    outline: 0px auto -webkit-focus-ring-color;
+    outline-offset: 0px;
+}
+
+.edit-btn:focus{
+    border:none;
+    text-decoration: none;
+
+}
+
+#containerRecebe{
+    max-height:450px;
+    min-height: 450px;
+    overflow-y: scroll;
+    border-radius: 5px;
+}
+
+.container-chat{
+    height: 600px;
+    max-height: 600px;
+}
+
+.div-texto{
+    border-radius: 5px;
+}
+
+
+
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    max-height: 800px;
+    overflow-y: scroll
+}
+
+
+.lista-users{
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+
+
+
+
+
+.chat-online {
+    color: #34ce57
+}
+
+.chat-offline {
+    color: #e4606d
+}
+
+
+.chat-message-left,
+.chat-message-right {
+    display: flex;
+    flex-shrink: 0
+}
+
+
+.py-3 {
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
+}
+.px-4 {
+    padding-right: 1.5rem!important;
+    padding-left: 1.5rem!important;
+}
+.flex-grow-0 {
+    flex-grow: 0!important;
+}
+.border-top {
+    border-top: 1px solid #dee2e6!important;
+}

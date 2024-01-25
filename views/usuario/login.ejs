@@ -1,0 +1,111 @@
+<%- include("../partials/header.ejs") %>
+<%- include("./navbarlogin.ejs") %>
+<%- include("../includes/modalerro.ejs") %>
+<body>
+    <div class="container container-login">
+        <!-- <div class="card-header">
+            <h1>AREA DE LOGIN</h1>
+        </div> -->
+        <div class="card-body">
+            <form action="">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="email">E-mail</label>
+                            <input class="form-control" type="text" name="email" id="emaillogin" placeholder="exemplo@exemplo.com">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="senha">Senha</label>
+                            <input class="form-control" type="password" name="senha" id="senhalogin" placeholder="**********">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center mt-5">
+                            <button class="btn btn-dark btn-block" type="button" onclick="login()">Entrar</button>
+                        </div>
+                        <div class="col-md-12 text-center mt-5">
+                            Não tem conta? <a type="button" id="fechar-cadastro"  data-toggle="modal" data-target="#modal-cadastro"><h6>cadastrar</h6></a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</body>
+<%- include('../partials/jquery.ejs') %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+<script>
+    var socket = io("http://localhost:3000");
+
+    
+
+
+    $(function(){
+        var Nome = localStorage.getItem('Nome')
+        var CodUsuario = localStorage.getItem('CodUser')
+        if(Nome != undefined || Nome != '' || Nome != ' ' || CodUsuario != undefined || CodUsuario != '' || CodUsuario != ' '){
+            window.location.hre = "http://localhost:3000/"
+        }else{
+            console.log("ERRO")
+        }
+    })
+
+    function login(){ // Função que envia os dados para validar / fazer login
+        var email = $('#emaillogin').val()
+        var senha = $('#senhalogin').val()
+
+        socket.emit("logar",{email:email, senha:senha}) // Emitindo evento com os dados email e senha para o back
+        socket.on("dadosUser", (nomeUser, CodUser, destino) => { // Recebendo evento no front com dados do usuario depois de validados
+            localStorage.setItem('Nome', nomeUser); // salvando o nome do usuario no localStorage
+            localStorage.setItem('CodUser', CodUser); // salvando o CodUser do usuario no localStorage
+            setTimeout(function(){
+                window.location.href= destino // Apoós dados validados, será redirecionado a pagina do chat
+            },1000)
+            
+
+        } )
+        socket.on("emailVazio", (msgEmail) => { // Evento de validação, caso usuario esteja mandando email vazio
+            $('.modal-title').html("E-mail invalido!")
+            $('.modal-body').html(msgEmail)
+            $('.modal-error').modal('show')
+            setTimeout(function(){
+                $('.modal-error').modal('hide')
+            },3000)
+        })
+
+        socket.on("senhaVazia", (msgSenha) => { // Evento de validação, caso usuario esteja mandando senha vazia
+            $('.modal-title').html("Senha invalida!")
+            $('.modal-body').html(msgSenha)
+            $('.modal-error').modal('show')
+            setTimeout(function(){
+                $('.modal-error').modal('hide')
+            },3000)
+        } )
+
+        socket.on("erroLogin", (msg) => { // Evento de validação, caso usuario não exista
+            $('.modal-title').html("ERRO")
+            $('.modal-body').html(msg)
+            $('.modal-error').modal('show')
+            setTimeout(function(){
+                $('.modal-error').modal('hide')
+            },3000)
+            console.log(msg)
+        })
+    }
+
+
+    
+
+
+
+
+</script>
+
+
+<style>
+    .container-login{
+        margin-top: 300px;
+    }
+</style>
+<%- include("../partials/footer.ejs") %> 
